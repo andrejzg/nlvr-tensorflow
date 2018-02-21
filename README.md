@@ -1,4 +1,4 @@
-# Cornell NLVR Tensorflow Starter Pack
+# Cornell NLVR TensorFlow Starter Pack
 
 A TensorFlow starter pack for Cornell's Natural Language Visual Reasoning (NLVR) dataset. 
 
