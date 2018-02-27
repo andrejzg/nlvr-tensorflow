@@ -20,17 +20,20 @@ class Batcher:
 
         self.batch_gen = chunks(self.keys, self.size)
 
-    def next_batch(self):
+    def __iter__(self):
+        return self
+
+    def __next__(self):
         try:
             keys = next(self.batch_gen)
         except StopIteration:
             if self.shuffle:
                 random.shuffle(self.keys)
             if self.repeat:
-                self.batch_gen = chunks(self.keys, self.size)
+                self.reset()
                 keys = next(self.batch_gen)
             else:
-                return
+                raise StopIteration
 
         images = np.array(collect_keys(self.images, keys))
         max_q_len = max([np.array(x).shape[0] for x in collect_keys(self.questions, keys)])
@@ -47,6 +50,9 @@ class Batcher:
             labels = pad(labels, ref_labels, offsets=[0] * len(labels.shape))
 
         return images, questions, labels
+
+    def reset(self):
+        self.batch_gen = chunks(self.keys, self.size)
 
 
 def pad(array, reference, offsets):

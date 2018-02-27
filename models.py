@@ -7,25 +7,25 @@ def simple_conv_lstm(image, question, config):
     # Embed the image
     image_emb_1 = tf.layers.conv2d(inputs=image,
                                    filters=10,
-                                   kernel_size=[25, 25],
+                                   kernel_size=[10, 10],
                                    strides=(1, 1),
                                    activation=tf.nn.relu)
 
     image_emb_2 = tf.layers.conv2d(inputs=image_emb_1,
                                    filters=10,
-                                   kernel_size=[25, 25],
+                                   kernel_size=[10, 10],
                                    strides=(1, 1),
                                    activation=tf.nn.relu)
 
     image_emb_3 = tf.layers.conv2d(inputs=image_emb_2,
                                    filters=10,
-                                   kernel_size=[25, 25],
+                                   kernel_size=[10, 10],
                                    strides=(1, 1),
                                    activation=tf.nn.relu)
 
     pooled = tf.layers.max_pooling2d(inputs=image_emb_3,
-                                     pool_size=[25, 25],
-                                     strides=[25, 25])
+                                     pool_size=[5, 5],
+                                     strides=[1, 1])
 
     image_emb = tf.contrib.layers.flatten(pooled)
 

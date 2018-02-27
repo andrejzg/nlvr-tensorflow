@@ -1,10 +1,12 @@
 import itertools
 import string
-import imageio
 import h5py
 import os
 
+import numpy as np
+
 from tqdm import tqdm
+from PIL import Image
 
 table = str.maketrans({key: None for key in string.punctuation})
 
@@ -16,16 +18,16 @@ def make_examples(raw_examples, split):
     return example_pairs
 
 
-def load_or_make_numeric_examples(examples, word2id, split, save_path):
+def load_or_make_numeric_examples(examples, word2id, split, save_path, resize=None):
     if os.path.isfile(f'data/{split}/{split}.hdf5'):
         hf = h5py.File(f'data/{split}/{split}.hdf5')
     else:
-        make_numeric_examples(examples, split, word2id, save_path)
+        make_numeric_examples(examples, split, word2id, save_path, resize)
         hf = h5py.File(f'data/{split}/{split}.hdf5')
     return hf
 
 
-def make_numeric_examples(examples, split, word2id, save_path):
+def make_numeric_examples(examples, split, word2id, save_path, resize=None):
     numeric_examples = []
     skipped = 0
     path = save_path
@@ -37,7 +39,11 @@ def make_numeric_examples(examples, split, word2id, save_path):
         sentence, image_path, label = x
         word_ids = [word2id[w] for w in clean_text(sentence).split()]
         try:
-            image = imageio.imread(image_path)[:, :, 0:3]  # consider first 3 channels
+            image = Image.open(image_path)
+            image = image.convert('RGB')
+            if resize:
+                image = image.resize(resize[::-1])
+            image = np.array(image)
         except IOError:
             skipped += 1
             pass
