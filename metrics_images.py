@@ -2,7 +2,7 @@ import json
 import sys
 
 # Load the predictions file. Assume it is a CSV.
-predictions = { }
+predictions = {}
 for line in open(sys.argv[1]).readlines():
   if line:
     splits = line.strip().split(",")

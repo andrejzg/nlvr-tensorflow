@@ -2,6 +2,7 @@ import itertools
 import string
 import h5py
 import os
+import importlib.util
 
 import numpy as np
 
@@ -70,3 +71,9 @@ def clean_text(text):
 
     return text
 
+
+def import_module(path):
+    spec = importlib.util.spec_from_file_location('', path)
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    return m
