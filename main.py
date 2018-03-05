@@ -43,12 +43,13 @@ all_words = list(set([x.lower() for x in list(itertools.chain.from_iterable([x.s
 word2id = defaultdict(lambda: 1)  # use 0 for pad, 1 for unk
 for i, word in enumerate(all_words, start=2):
     word2id[word] = i
+
 id2word = {i: w for w, i in word2id.items()}
 
 # Prepare config file
 config = {
         'model_fn': models.simple_conv_lstm,
-        'vocab_size': len(word2id),
+        'vocab_size': len(word2id)+2,
         'lr': 5e-3,
         'eval_every_steps': 200,
         'x_resize': 50,

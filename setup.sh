@@ -7,4 +7,4 @@ mv /tmp/nlvr/metrics_images.py .
 rm -rf /tmp/nlvr
 virtualenv -p /usr/bin/python3.6 venv
 source my_project/bin/activate
-pip install requirements.txt
+pip install -r requirements.txt

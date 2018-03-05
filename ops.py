@@ -22,7 +22,7 @@ def embed_sequence(inputs, name, vocab_size, trainable=False):
     with tf.variable_scope(name, reuse=tf.AUTO_REUSE):
         embedding_matrix = tf.get_variable(
             name="embedding_matrix",
-            initializer=tf.constant(np.eye(vocab_size+1),
+            initializer=tf.constant(np.eye(vocab_size),
                                     dtype=tf.float32,
                                     name="embedding_matrix_init"),
             trainable=trainable)
@@ -44,5 +44,3 @@ def convert_to_text(tensor, id2word):
     """ input: batch size x input size """
     return tf.map_fn(lambda x: tf.map_fn(lambda i: id2word[i], x),
                      elems=tensor)
-
-
