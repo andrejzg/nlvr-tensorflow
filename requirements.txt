@@ -22,7 +22,7 @@ pathlib==1.0.1
 Pillow==5.0.0
 plac==0.9.6
 preshed==1.0.0
-protobuf==3.5.1
+protobuf==3.18.3
 pytz==2017.3
 regex==2017.4.5
 requests==2.18.4
